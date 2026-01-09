@@ -1,15 +1,24 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import connectiondb from './config/database.js'
+import userRouter from './routes/userRouter.js'
+import cookieParser from "cookie-parser";
 
 dotenv.config({})
 
-const PORT =process.env.PORT||5000
-const app= express()
+const PORT = process.env.PORT || 5000
+const app = express()
+app.use(cookieParser());
+app.use(express.json());
 
-app.listen(PORT,async ()=>{
+app.use("/api/v1/user", userRouter);
+
+const startserver = async () => {
     await connectiondb()
-    console.log(`Server is running in port: ${PORT}`)
-})
+    app.listen(PORT, async () => {
+        console.log(`Server is running in port: ${PORT}`)
+    })
 
+}
+startserver()
 
