@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import connectiondb from './config/database.js'
 import userRouter from './routes/userRouter.js'
+import messageRouter from './routes/messageRoute.js'
 import cookieParser from "cookie-parser";
 
 dotenv.config({})
@@ -12,6 +13,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/message",messageRouter);
 
 const startserver = async () => {
     await connectiondb()
